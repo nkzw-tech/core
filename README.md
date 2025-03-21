@@ -94,7 +94,7 @@ const fruits = ['apple', null, 'banana', undefined];
 const validFruits = fruits.filter(isPresent); // ['apple', 'banana']
 ```
 
-### `maxBy<T>(array: ReadonlyArray<T>, fn: (a: T) => number): T | undefined`
+### `maxBy<T>(iterable: Iterable<T>, fn: (a: T) => number): T | undefined`
 
 Returns the item with the maximum value according to the provided function.
 
@@ -109,7 +109,29 @@ const fruits = [
 const mostExpensive = maxBy(fruits, (fruit) => fruit.price); // { name: 'melon', price: 399 }
 ```
 
-### `minBy<T>(array: ReadonlyArray<T>, fn: (a: T) => number): T | undefined`
+This function also works with iterables, like Maps, Sets, or generator functions.
+
+```typescript
+import maxBy from '@nkzw/core/maxBy.js';
+
+const fruitPrices = new Map([
+  ['apple', 199],
+  ['banana', 99],
+  ['melon', 399],
+]);
+
+const mostExpensive = maxBy(fruitPrices, ([, price]) => price); // ['melon', 399]
+
+const numbers = function* () {
+  yield 1;
+  yield 2;
+  yield 3;
+};
+
+const maxNumber = maxBy(numbers(), (n) => n); // 3
+```
+
+### `minBy<T>(iterable: Iterable<T>, fn: (a: T) => number): T | undefined`
 
 Returns the item with the minimum value according to the provided function.
 
@@ -123,6 +145,8 @@ const fruits = [
 ];
 const cheapest = minBy(fruits, (fruit) => fruit.price); // { name: 'banana', price: 99 }
 ```
+
+Similar to `maxBy`, this function also works with iterables.
 
 ### `parseInteger(value: string): number | null`
 

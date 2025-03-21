@@ -19,3 +19,29 @@ test('maxBy returns the first by insertion order', () => {
     objectA,
   );
 });
+
+test('maxBy works with iterators', () => {
+  expect(
+    maxBy(
+      (function* () {
+        yield 1;
+        yield 2;
+        yield 3;
+      })(),
+      (x) => x,
+    ),
+  ).toEqual(3);
+
+  expect(
+    maxBy(
+      new Map([
+        [1, 2],
+        [2, 3],
+        [3, 1],
+      ]).values(),
+      (x) => x,
+    ),
+  ).toEqual(3);
+
+  expect(maxBy(new Set([1, 2, 3]), (x) => x)).toEqual(3);
+});
