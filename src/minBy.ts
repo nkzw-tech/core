@@ -2,11 +2,14 @@ export default function minBy<T>(
   array: ReadonlyArray<T>,
   fn: (a: T) => number,
 ) {
-  let min: T | undefined = undefined;
+  let minItem: T | undefined = undefined;
+  let min: number = Infinity;
   for (const item of array) {
-    if (min === undefined || fn(item) < fn(min)) {
-      min = item;
+    const value = fn(item);
+    if (minItem === undefined || value < min) {
+      min = value;
+      minItem = item;
     }
   }
-  return min;
+  return minItem;
 }

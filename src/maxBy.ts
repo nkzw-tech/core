@@ -2,11 +2,14 @@ export default function maxBy<T>(
   array: ReadonlyArray<T>,
   fn: (a: T) => number,
 ) {
-  let max: T | undefined = undefined;
+  let maxItem: T | undefined = undefined;
+  let max: number = -Infinity;
   for (const item of array) {
-    if (max === undefined || fn(item) > fn(max)) {
-      max = item;
+    const value = fn(item);
+    if (maxItem === undefined || value > max) {
+      max = value;
+      maxItem = item;
     }
   }
-  return max;
+  return maxItem;
 }

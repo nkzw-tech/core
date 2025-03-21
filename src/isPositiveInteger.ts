@@ -1,8 +1,3 @@
 export default function isPositiveInteger(number: unknown) {
-  return (
-    typeof number === 'number' &&
-    !Number.isNaN(number) &&
-    number > 0 &&
-    Number.isInteger(number)
-  );
+  return Number.isInteger(number) && (number as number) > 0;
 }
