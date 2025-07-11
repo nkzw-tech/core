@@ -222,3 +222,34 @@ function getFruitColor(fruit: Fruit): string {
   }
 }
 ```
+
+### `safeParse<T>(data: string | null | undefined): T | null`
+
+Safely parses a JSON string into an object of type `T`, returning null for invalid JSON or if the input is null or undefined. It does not throw if the JSON is invalid, and it also does not validate whether the parsed object actually matches the type `T`.
+
+```tsx
+import safeParse from '@nkzw/core/safeParse.js';
+
+const jsonString = '{"name": "apple", "price": 199}';
+const fruit = safeParse<{ name: string; price: number }>(jsonString);
+```
+
+### `filterNodes<T, S extends Record<string, unknown>>(edge): edge is S & { readonly node: T }`
+
+Type guard for filtering nodes in a GraphQL-like structure. It checks if the edge has a `node` property of type `T` and only returns edges that are not null or undefined.
+
+```tsx
+import filterNodes from '@nkzw/core/filterNodes.js';
+
+users.edges.filter(filterNodes);
+```
+
+### `type Nullable<T> = T | null | undefined`
+
+A utility type that represents a value that can be of type `T`, `null`, or `undefined`. This is useful for functions that may return a value or nothing.
+
+```typescript
+import { Nullable } from '@nkzw/core/Nullable.js';
+
+const getUserName(user: Nullable<{ name: string }>): string => user?.name ?? 'Guest';
+```
